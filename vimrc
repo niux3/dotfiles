@@ -8,5 +8,5 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
-set background=dark
-colorscheme material-monokai
+set background=light
+colorscheme PaperColor
