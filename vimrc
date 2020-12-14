@@ -1,6 +1,7 @@
 set t_Co=256
 syntax on
 set number
+set rnu
 set showcmd
 set mouse=a
 set tabstop=4
