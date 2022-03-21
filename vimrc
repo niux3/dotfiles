@@ -18,6 +18,7 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'mattn/emmet-vim'
 Plugin 'preservim/nerdtree'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'preservim/nerdcommenter'
 
 call vundle#end()            " Nécessaire
 filetype plugin indent on    " Nécessaire
@@ -37,6 +38,10 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " permet d'avoir un thème sympathique
 if (has("termguicolors"))
   set termguicolors
+endif
+
+if has("autocmd")
+    autocmd! bufwritepost .vimrc source ~/.vimrc
 endif
 
 set t_Co=256
@@ -63,4 +68,4 @@ set background=dark
 colorscheme palenight
 
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
-
+nnoremap <C-c> :call NERDComment(1, 'toggle')<CR>
