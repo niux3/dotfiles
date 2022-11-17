@@ -40,7 +40,18 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
+function! SetupCtrlP()
+  if exists("g:loaded_ctrlp") && g:loaded_ctrlp
+    augroup CtrlPExtension
+      autocmd!
+      autocmd FocusGained  * CtrlPClearCache
+      autocmd BufWritePost * CtrlPClearCache
+    augroup END
+  endif
+endfunction
+
 if has("autocmd")
+    autocmd VimEnter * :call SetupCtrlP()
     autocmd! bufwritepost .vimrc source ~/.vimrc
 endif
 
@@ -69,3 +80,4 @@ colorscheme palenight
 
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
 nnoremap <C-c> :call NERDComment(1, 'toggle')<CR>
+noremap <C-c> :call NERDComment(1, 'toggle')<CR>
