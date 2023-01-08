@@ -19,6 +19,10 @@ Plugin 'mattn/emmet-vim'
 Plugin 'preservim/nerdtree'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'preservim/nerdcommenter'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'nvie/vim-flake8'
+Plugin 'ackyshake/VimCompletesMe'
+
 
 call vundle#end()            " Nécessaire
 filetype plugin indent on    " Nécessaire
@@ -30,15 +34,22 @@ let g:airline#extensions#branch#enabled=1
 let g:loaded_delimitMate = 1
 let g:palenight_terminal_italics=1
 
+" Error symbols
+let g:syntastic_error_symbol = "✗"
+let syntastic_style_error_symbol = "✗"
+let g:syntastic_warning_symbol = "∙∙"
+let syntastic_style_warning_symbol = "∙∙"
+
 " change cursor
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " permet d'avoir un thème sympathique
-if (has("termguicolors"))
+if has('termguicolors')
   set termguicolors
 endif
+
 
 function! SetupCtrlP()
   if exists("g:loaded_ctrlp") && g:loaded_ctrlp
@@ -55,6 +66,7 @@ if has("autocmd")
     autocmd! bufwritepost .vimrc source ~/.vimrc
 endif
 
+let python_highlight_all=1
 set t_Co=256
 syntax on
 set number
@@ -71,6 +83,10 @@ set shiftwidth=4
 set softtabstop=4
 set ai
 set omnifunc=syntaxcomplete#Complete
+set encoding=utf-8
+set clipboard=unnamed
+
+
 
 " 'jiangmiao/auto-pairs' ==> set paste pose problème avec ce plugin essentiel
 " set paste
@@ -79,5 +95,6 @@ set background=dark
 colorscheme palenight
 
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
-nnoremap <C-c> :call NERDComment(1, 'toggle')<CR>
-noremap <C-c> :call NERDComment(1, 'toggle')<CR>
+nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
+
+oremap <C-c> :call NERDComment(1, 'toggle')<CR>
