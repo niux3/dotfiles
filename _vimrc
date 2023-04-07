@@ -23,11 +23,13 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'ackyshake/VimCompletesMe'
 
+Plugin 'glench/vim-jinja2-syntax'
+
 
 call vundle#end()            " Nécessaire
 filetype plugin indent on    " Nécessaire
 
-
+" theme
 let g:lightline = { 'colorscheme': 'palenight' }
 let g:airline_theme = "palenight"
 let g:airline#extensions#branch#enabled=1
@@ -67,6 +69,7 @@ if has("autocmd")
 endif
 
 let python_highlight_all=1
+let NERDTreeShowHidden=1
 set t_Co=256
 syntax on
 set number
@@ -97,4 +100,3 @@ colorscheme palenight
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
 
-oremap <C-c> :call NERDComment(1, 'toggle')<CR>
