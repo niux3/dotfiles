@@ -50,6 +50,18 @@ let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
+" avec gnome
+if has("autocmd")
+  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
+  au InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' |
+    \   silent execute '!echo -ne "\e[5 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[3 q"' | redraw! |
+    \ endif
+  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif
+
 " change couleur curseur si mode insert ou mode normal/visuel
 if &term =~ "xterm\\|rxvt"
   " use an orange cursor in insert mode
@@ -61,7 +73,6 @@ if &term =~ "xterm\\|rxvt"
   autocmd VimLeave * silent !echo -ne "\033]112\007"
   " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
 endif
-
 
 
 " permet d'avoir un thème sympathique
