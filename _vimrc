@@ -24,6 +24,8 @@ Plugin 'nvie/vim-flake8'
 Plugin 'ackyshake/VimCompletesMe'
 
 Plugin 'glench/vim-jinja2-syntax'
+Plugin 'evanleck/vim-svelte', {'branch': 'main'}
+Plugin 'svg.vim'
 
 
 call vundle#end()            " Nécessaire
@@ -43,9 +45,24 @@ let g:syntastic_warning_symbol = "∙∙"
 let syntastic_style_warning_symbol = "∙∙"
 
 " change cursor
+" avec Konsole
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+
+" change couleur curseur si mode insert ou mode normal/visuel
+if &term =~ "xterm\\|rxvt"
+  " use an orange cursor in insert mode
+  let &t_SI = "\<Esc>]12;orange\x7"
+  " use a red cursor otherwise
+  let &t_EI = "\<Esc>]12;red\x7"
+  silent !echo -ne "\033]12;red\007"
+  " reset cursor when vim exits
+  autocmd VimLeave * silent !echo -ne "\033]112\007"
+  " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
+endif
+
+
 
 " permet d'avoir un thème sympathique
 if has('termguicolors')
@@ -88,6 +105,7 @@ set ai
 set omnifunc=syntaxcomplete#Complete
 set encoding=utf-8
 set clipboard=unnamed
+set guifont=Source\ Code\ Pro\ 12
 
 
 
@@ -97,6 +115,9 @@ set clipboard=unnamed
 set background=dark
 colorscheme palenight
 
+" touch f9 ==> liste les fichiers du dossier et sous-dossiers
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
+" \c + c ==> commente ligne par ligne
+" \c + space ==> commente bloc
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
 
