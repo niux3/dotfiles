@@ -8,6 +8,7 @@ call vundle#begin()
 " On indique à Vundle de s'auto-gérer :)
 Plugin 'gmarik/Vundle.vim'  " Nécessaire
 
+Plugin 'editorconfig/editorconfig-vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'drewtempelmeyer/palenight.vim'
 Plugin 'vim-airline/vim-airline'
@@ -20,8 +21,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'preservim/nerdcommenter'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'nvie/vim-flake8'
-Plugin 'ackyshake/VimCompletesMe'
+Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'glench/vim-jinja2-syntax'
 Plugin 'evanleck/vim-svelte', {'branch': 'main'}
@@ -31,10 +31,12 @@ Plugin 'svg.vim'
 call vundle#end()            " Nécessaire
 filetype plugin indent on    " Nécessaire
 
+
 " theme
 let g:lightline = { 'colorscheme': 'palenight' }
 let g:airline_theme = "palenight"
 let g:airline#extensions#branch#enabled=1
+
 let g:loaded_delimitMate = 1
 let g:palenight_terminal_italics=1
 
@@ -65,10 +67,10 @@ endif
 " change couleur curseur si mode insert ou mode normal/visuel
 if &term =~ "xterm\\|rxvt"
   " use an orange cursor in insert mode
-  let &t_SI = "\<Esc>]12;orange\x7"
+  let &t_SI = "\<Esc>]12;\3465A4\x7"
   " use a red cursor otherwise
-  let &t_EI = "\<Esc>]12;red\x7"
-  silent !echo -ne "\033]12;red\007"
+  let &t_EI = "\<Esc>]12;\3465A4\x7"
+  silent !echo -ne "\033]12;\3465A4\007"
   " reset cursor when vim exits
   autocmd VimLeave * silent !echo -ne "\033]112\007"
   " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
@@ -114,7 +116,7 @@ set shiftwidth=4
 set softtabstop=4
 set ai
 set omnifunc=syntaxcomplete#Complete
-set encoding=utf-8
+set encoding=UTF-8
 set clipboard=unnamed
 set guifont=Source\ Code\ Pro\ 12
 
