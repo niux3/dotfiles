@@ -12,5 +12,15 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```shell
 :PluginInstall
 ```
+
+- Pour installer YouCompleteMe:
+    - installer les dependances : 
+
+    ```shell
+#apt install build-essential cmake python3-dev
+$ cd ~/.vim/bundle/YouCompleteMe/
+$ python3 install.py --clang-completer
+    ```
+
 - sortir de vim
 - relancer vim
