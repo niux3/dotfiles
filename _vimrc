@@ -21,6 +21,8 @@ Plugin 'preservim/nerdtree'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'preservim/nerdcommenter'
 Plugin 'vim-syntastic/syntastic'
+"Plugin 'nvie/vim-flake8'
+"Plugin 'ackyshake/VimCompletesMe'
 Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'glench/vim-jinja2-syntax'
@@ -128,9 +130,25 @@ set guifont=Source\ Code\ Pro\ 12
 set background=dark
 colorscheme palenight
 
+" ctrl p
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.?(git|__pycache__|idea|vsc|vscode|hg|svn|node_modules|venv)$',
+  \ 'file': '\v\.(exe|so|dll|pyc)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
 " touch f9 ==> liste les fichiers du dossier et sous-dossiers
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
 " \c + c ==> commente ligne par ligne
 " \c + space ==> commente bloc
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
+
+" Start NERDTree. If a file is specified, move the cursor to its window.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
 
