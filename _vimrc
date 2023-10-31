@@ -151,4 +151,8 @@ autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | e
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
+let g:user_emmet_leader_key='<C-E>'
 
+" svelte plug
+let g:svelte_indent_script = 0
+let g:svelte_indent_style = 0
