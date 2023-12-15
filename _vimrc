@@ -21,8 +21,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'preservim/nerdcommenter'
 Plugin 'vim-syntastic/syntastic'
-"Plugin 'nvie/vim-flake8'
-"Plugin 'ackyshake/VimCompletesMe'
+Plugin 'nvie/vim-flake8'
 Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'glench/vim-jinja2-syntax'
@@ -116,10 +115,19 @@ set expandtab
 set noswapfile
 set shiftwidth=4
 set softtabstop=4
+set scrolloff=10
+set sidescrolloff=10
+set cursorline
+set splitbelow
+set splitright
 set ai
+set wrap
+set ignorecase
+set smartcase
+" set hlsearch
 set omnifunc=syntaxcomplete#Complete
 set encoding=UTF-8
-set clipboard=unnamed
+set clipboard="unnamedplus"
 set guifont=Source\ Code\ Pro\ 12
 
 
