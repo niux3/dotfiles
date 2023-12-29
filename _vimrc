@@ -22,6 +22,7 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'preservim/nerdcommenter'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
+Plugin 'preservim/tagbar'
 Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'glench/vim-jinja2-syntax'
@@ -146,8 +147,12 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'some_bad_symbolic_links',
   \ }
 
-" touch f9 ==> liste les fichiers du dossier et sous-dossiers
+" touch f9 ==> liste les fichiers/dossier/sous-dossier (panneau à gauche)
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
+
+" touche f8 ==> ajoute tagbar (panneau à droite)
+nnoremap <F8> :TagbarToggle<CR>
+
 " \c + c ==> commente ligne par ligne
 " \c + space ==> commente bloc
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
