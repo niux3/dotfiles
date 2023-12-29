@@ -29,7 +29,6 @@ Plugin 'glench/vim-jinja2-syntax'
 Plugin 'evanleck/vim-svelte', {'branch': 'main'}
 Plugin 'svg.vim'
 
-
 call vundle#end()            " Nécessaire
 filetype plugin indent on    " Nécessaire
 
@@ -83,7 +82,6 @@ endif
 if has('termguicolors')
   set termguicolors
 endif
-
 
 function! SetupCtrlP()
   if exists("g:loaded_ctrlp") && g:loaded_ctrlp
@@ -169,3 +167,4 @@ let g:user_emmet_leader_key='<C-E>'
 " svelte plug
 let g:svelte_indent_script = 0
 let g:svelte_indent_style = 0
+
