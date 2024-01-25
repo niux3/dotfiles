@@ -164,10 +164,15 @@ nnoremap <F8> :TagbarToggle<CR>
 " \c + space ==> commente bloc
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
 
+" tab
 nnoremap tt :tabnew<CR>
 nnoremap tn :tabnext<CR>
 nnoremap tp :tabprev<CR>
 nnoremap tc :tabclose<CR>
+
+" copier/coller
+vnoremap <C-c> "+y
+map <C-v> "+p
 
 " Start NERDTree. If a file is specified, move the cursor to its window.
 autocmd StdinReadPre * let s:std_in=1
@@ -198,3 +203,4 @@ function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+

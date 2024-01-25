@@ -19,5 +19,9 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 $ cd ~/.vim/bundle/YouCompleteMe/
 $ python3 install.py --clang-completer
 ```
+- pour bénéficier d'un vrai copier/coller, il faut installer gvim:
+```shell
+# apt-get install vim-gtk3
+```
 - sortir de vim
 - relancer vim
