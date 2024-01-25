@@ -164,6 +164,11 @@ nnoremap <F8> :TagbarToggle<CR>
 " \c + space ==> commente bloc
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
 
+nnoremap tt :tabnew<CR>
+nnoremap tn :tabnext<CR>
+nnoremap tp :tabprev<CR>
+nnoremap tc :tabclose<CR>
+
 " Start NERDTree. If a file is specified, move the cursor to its window.
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
@@ -177,7 +182,7 @@ let g:user_emmet_leader_key='<C-E>'
 let g:svelte_indent_script = 0
 let g:svelte_indent_style = 0
 
-
+" COC
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
