@@ -23,11 +23,13 @@ Plugin 'preservim/nerdcommenter'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'preservim/tagbar'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
+Plugin 'neoclide/coc.nvim'
 
 Plugin 'glench/vim-jinja2-syntax'
 Plugin 'evanleck/vim-svelte', {'branch': 'main'}
 Plugin 'svg.vim'
+
 
 call vundle#end()            " Nécessaire
 filetype plugin indent on    " Nécessaire
@@ -83,6 +85,7 @@ if has('termguicolors')
   set termguicolors
 endif
 
+
 function! SetupCtrlP()
   if exists("g:loaded_ctrlp") && g:loaded_ctrlp
     augroup CtrlPExtension
@@ -108,6 +111,7 @@ set backspace=indent,eol,start
 set smartindent
 set autoindent
 set showcmd
+set noshowmode
 set mouse=a
 set tabstop=4
 set expandtab
@@ -123,11 +127,18 @@ set ai
 set wrap
 set ignorecase
 set smartcase
+set title
 " set hlsearch
 set omnifunc=syntaxcomplete#Complete
 set encoding=UTF-8
 set clipboard="unnamedplus"
 set guifont=Source\ Code\ Pro\ 12
+
+set nobackup
+set nowritebackup
+set updatetime=300
+set signcolumn=yes
+
 
 
 
@@ -145,12 +156,10 @@ let g:ctrlp_custom_ignore = {
   \ 'link': 'some_bad_symbolic_links',
   \ }
 
-" touch f9 ==> liste les fichiers/dossier/sous-dossier (panneau à gauche)
+" touch f9 ==> liste les fichiers du dossier et sous-dossiers
 nnoremap <silent> <F9> :NERDTreeToggle<CR>
 
-" touche f8 ==> ajoute tagbar (panneau à droite)
 nnoremap <F8> :TagbarToggle<CR>
-
 " \c + c ==> commente ligne par ligne
 " \c + space ==> commente bloc
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
@@ -168,3 +177,19 @@ let g:user_emmet_leader_key='<C-E>'
 let g:svelte_indent_script = 0
 let g:svelte_indent_style = 0
 
+
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
