@@ -1,4 +1,4 @@
-set nocompatible      " Nécessaire
+set nocompatible      " Nécessaire         
 filetype off          " Nécessaire
 
 " Ajout de Vundle au runtime path et initialisation
@@ -18,7 +18,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'mattn/emmet-vim'
 Plugin 'preservim/nerdtree'
-Plugin 'davidhalter/jedi-vim'
+" Plugin 'davidhalter/jedi-vim'
 Plugin 'preservim/nerdcommenter'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
@@ -29,6 +29,7 @@ Plugin 'neoclide/coc.nvim'
 Plugin 'glench/vim-jinja2-syntax'
 Plugin 'evanleck/vim-svelte', {'branch': 'main'}
 Plugin 'svg.vim'
+Plugin 'matze/vim-move'
 
 
 call vundle#end()            " Nécessaire
@@ -165,10 +166,12 @@ nnoremap <F8> :TagbarToggle<CR>
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
 
 " tab
-nnoremap tt :tabnew<CR>
-nnoremap tn :tabnext<CR>
-nnoremap tp :tabprev<CR>
-nnoremap tc :tabclose<CR>
+nnoremap nt :tabnew<CR>
+" tabnext ==> gt
+" nnoremap tn :tabnext<CR>
+" tabprev ==> gT
+" nnoremap tp :tabprev<CR>
+" nnoremap tc :tabclose<CR>
 
 " copier/coller
 vnoremap <C-c> "+y
@@ -186,6 +189,9 @@ let g:user_emmet_leader_key='<C-E>'
 " svelte plug
 let g:svelte_indent_script = 0
 let g:svelte_indent_style = 0
+" vim move
+let g:move_key_modifier = 'C'
+let g:move_key_modifier_visualmode = 'C'
 
 " COC
 inoremap <silent><expr> <TAB>
