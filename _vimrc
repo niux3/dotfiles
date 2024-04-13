@@ -158,9 +158,9 @@ let g:ctrlp_custom_ignore = {
   \ }
 
 " touch f9 ==> liste les fichiers du dossier et sous-dossiers
-nnoremap <silent> <F9> :NERDTreeToggle<CR>
+nnoremap <silent> <F2> :NERDTreeToggle<CR>
 
-nnoremap <F8> :TagbarToggle<CR>
+nnoremap <F3> :TagbarToggle<CR>
 " \c + c ==> commente ligne par ligne
 " \c + space ==> commente bloc
 nnoremap <leader>cc :call NERDComment('x', 'toggle')<CR>
