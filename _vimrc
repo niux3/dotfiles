@@ -30,7 +30,7 @@ Plugin 'glench/vim-jinja2-syntax'
 Plugin 'evanleck/vim-svelte', {'branch': 'main'}
 Plugin 'svg.vim'
 Plugin 'matze/vim-move'
-Plugin 'chrisbra/colorizer'
+Plugin 'lilydjwg/colorizer'
 
 
 call vundle#end()            " Nécessaire
