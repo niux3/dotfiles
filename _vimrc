@@ -20,7 +20,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'preservim/nerdtree'
 " Plugin 'davidhalter/jedi-vim'
 Plugin 'preservim/nerdcommenter'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'preservim/tagbar'
 " Plugin 'Valloric/YouCompleteMe'
@@ -30,6 +30,7 @@ Plugin 'glench/vim-jinja2-syntax'
 Plugin 'evanleck/vim-svelte', {'branch': 'main'}
 Plugin 'svg.vim'
 Plugin 'matze/vim-move'
+Plugin 'chrisbra/colorizer'
 
 
 call vundle#end()            " Nécessaire
@@ -140,9 +141,6 @@ set nowritebackup
 set updatetime=300
 set signcolumn=yes
 
-
-
-
 " 'jiangmiao/auto-pairs' ==> set paste pose problème avec ce plugin essentiel
 " set paste
 
@@ -171,7 +169,7 @@ nnoremap nt :tabnew<CR>
 " nnoremap tn :tabnext<CR>
 " tabprev ==> gT
 " nnoremap tp :tabprev<CR>
-" nnoremap tc :tabclose<CR>
+nnoremap ntc :tabclose<CR>
 
 " copier/coller
 vnoremap <C-c> "+y
