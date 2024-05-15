@@ -142,6 +142,9 @@ set nowritebackup
 set updatetime=300
 set signcolumn=yes
 
+set path+=**
+set wildmenu
+
 " 'jiangmiao/auto-pairs' ==> set paste pose problème avec ce plugin essentiel
 " set paste
 
@@ -209,3 +212,5 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+noremap <silent> <C-S-Right> :vertical resize -5<CR>
+noremap <silent> <C-S-Left> :vertical resize +5<CR>
