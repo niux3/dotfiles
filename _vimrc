@@ -216,3 +216,4 @@ noremap <silent> <C-S-Up> resize +5<CR>
 noremap <silent> <C-S-Right> :vertical resize -5<CR>
 noremap <silent> <C-S-Down> resize -5<CR>
 noremap <silent> <C-S-Left> :vertical resize +5<CR>
+nnoremap <F4> :set hlsearch!<CR>
