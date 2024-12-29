@@ -25,3 +25,5 @@ $ python3 install.py --clang-completer
 ```
 - sortir de vim
 - relancer vim
+
+![screenshot](vim.png)
