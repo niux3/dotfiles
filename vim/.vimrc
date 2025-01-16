@@ -10,7 +10,8 @@ Plugin 'gmarik/Vundle.vim'  " Nécessaire
 
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'itchyny/lightline.vim'
-Plugin 'drewtempelmeyer/palenight.vim'
+" Plugin 'drewtempelmeyer/palenight.vim'
+Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'pangloss/vim-javascript'
@@ -39,8 +40,10 @@ filetype plugin indent on    " Nécessaire
 
 
 " theme
-let g:lightline = { 'colorscheme': 'palenight' }
-let g:airline_theme = "palenight"
+" let g:lightline = { 'colorscheme': 'palenight' }
+let g:lightline = { 'colorscheme': 'PaperColor' }
+" let g:airline_theme = 'palenight'
+let g:airline_theme = 'papercolor'
 let g:airline#extensions#branch#enabled=1
 
 let g:loaded_delimitMate = 1
@@ -70,6 +73,12 @@ if has("autocmd")
   au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
 endif
 
+" permet à tmux et vim de cohabiter pour le theme & coloration syntaxique de vim
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    set termguicolors
+endif
 " change couleur curseur si mode insert ou mode normal/visuel
 if &term =~ "xterm\\|rxvt"
   " use an orange cursor in insert mode
@@ -131,7 +140,7 @@ set wrap
 set ignorecase
 set smartcase
 set title
-" set hlsearch
+set hlsearch
 set omnifunc=syntaxcomplete#Complete
 set encoding=UTF-8
 set clipboard="unnamedplus"
@@ -148,8 +157,10 @@ set wildmenu
 " 'jiangmiao/auto-pairs' ==> set paste pose problème avec ce plugin essentiel
 " set paste
 
-set background=dark
-colorscheme palenight
+" set background=dark
+set background=light
+" colorscheme palenight
+colorscheme PaperColor
 
 " ctrl p
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
@@ -212,8 +223,8 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-noremap <silent> <C-S-Up> resize +5<CR>
-noremap <silent> <C-S-Right> :vertical resize -5<CR>
-noremap <silent> <C-S-Down> resize -5<CR>
-noremap <silent> <C-S-Left> :vertical resize +5<CR>
+noremap <silent> <C-A-Up> resize +5<CR>
+noremap <silent> <C-A-Right> :vertical resize -5<CR>
+noremap <silent> <C-A-Down> resize -5<CR>
+noremap <silent> <C-A-Left> :vertical resize +5<CR>
 nnoremap <F4> :set hlsearch!<CR>
