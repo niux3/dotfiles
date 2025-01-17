@@ -1,6 +1,6 @@
-vim-config
-ma config vim
+# dotfiles
 
+## vim-config
 
 Pour installer : 
 - taper cette commande dans le terminal : 
@@ -26,4 +26,9 @@ $ python3 install.py --clang-completer
 - sortir de vim
 - relancer vim
 
-![screenshot](vim.png)
+## tmux
+
+Pour mettre à jour la configuration de tmux
+```shell
+$ tmux source-file .tmux-conf
+```
