@@ -10,8 +10,8 @@ Plugin 'gmarik/Vundle.vim'  " Nécessaire
 
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'itchyny/lightline.vim'
-" Plugin 'drewtempelmeyer/palenight.vim'
-Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'drewtempelmeyer/palenight.vim'
+" Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'pangloss/vim-javascript'
@@ -40,10 +40,10 @@ filetype plugin indent on    " Nécessaire
 
 
 " theme
-" let g:lightline = { 'colorscheme': 'palenight' }
-let g:lightline = { 'colorscheme': 'PaperColor' }
-" let g:airline_theme = 'palenight'
-let g:airline_theme = 'papercolor'
+let g:lightline = { 'colorscheme': 'palenight' }
+" let g:lightline = { 'colorscheme': 'PaperColor' }
+let g:airline_theme = 'palenight'
+" let g:airline_theme = 'papercolor'
 let g:airline#extensions#branch#enabled=1
 
 let g:loaded_delimitMate = 1
@@ -157,10 +157,10 @@ set wildmenu
 " 'jiangmiao/auto-pairs' ==> set paste pose problème avec ce plugin essentiel
 " set paste
 
-" set background=dark
-set background=light
-" colorscheme palenight
-colorscheme PaperColor
+set background=dark
+" set background=light
+colorscheme palenight
+" colorscheme PaperColor
 
 " ctrl p
 let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
@@ -223,8 +223,8 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-noremap <silent> <C-A-Up> resize +5<CR>
-noremap <silent> <C-A-Right> :vertical resize -5<CR>
-noremap <silent> <C-A-Down> resize -5<CR>
-noremap <silent> <C-A-Left> :vertical resize +5<CR>
+noremap <silent> <S-Up> resize +5<CR>
+noremap <silent> <S-Right> :vertical resize -5<CR>
+noremap <silent> <S-Down> resize -5<CR>
+noremap <silent> <S-Left> :vertical resize +5<CR>
 nnoremap <F4> :set hlsearch!<CR>
