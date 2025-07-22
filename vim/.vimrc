@@ -27,6 +27,7 @@ Plugin 'nvie/vim-flake8'
 Plugin 'preservim/tagbar'
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'neoclide/coc.nvim'
+Plugin 'tpope/vim-fugitive'
 
 Plugin 'glench/vim-jinja2-syntax'
 Plugin 'evanleck/vim-svelte', {'branch': 'main'}
@@ -91,7 +92,6 @@ if &term =~ "xterm\\|rxvt"
   " use \003]12;gray\007 for gnome-terminal and rxvt up to version 9.21
 endif
 
-
 " permet d'avoir un thème sympathique
 if has('termguicolors')
   set termguicolors
@@ -143,6 +143,7 @@ set title
 set hlsearch
 set omnifunc=syntaxcomplete#Complete
 set encoding=UTF-8
+set fileencodings=UTF-8,latin1
 set clipboard="unnamedplus"
 set guifont=Source\ Code\ Pro\ 12
 
