@@ -35,22 +35,22 @@ return {
   {
     "kien/ctrlp.vim",
     config = function()
-      -- Configuration similaire à votre ancien .vimrc
+      -- Configuration similaire à ancien .vimrc
       vim.g.ctrlp_custom_ignore = {
         dir = [[\v[\/]\.?(git|__pycache__|idea|vsc|vscode|hg|svn|node_modules|venv)$]],
         file = [[\v\.(exe|so|dll|pyc)$]],
       }
 
       -- Configuration supplémentaire pour de meilleures performances
-      vim.g.ctrlp_use_caching = 1
+      vim.g.ctrlp_use_caching = 0
       vim.g.ctrlp_clear_cache_on_exit = 0
-      vim.g.ctrlp_cache_dir = vim.fn.expand('~/.cache/ctrlp')
+      -- vim.g.ctrlp_cache_dir = vim.fn.expand('~/.cache/ctrlp')
 
       -- Utiliser fd si disponible pour plus de rapidité
-      if vim.fn.executable('fd') == 1 then
-        vim.g.ctrlp_user_command = 'fd --type f --color=never "" %s'
-        vim.g.ctrlp_user_command_caching = 1
-      end
+      -- if vim.fn.executable('fd') == 1 then
+      --   vim.g.ctrlp_user_command = 'fd --type f --color=never "" %s'
+      --   vim.g.ctrlp_user_command_caching = 1
+      -- end
     end,
     keys = {
       -- Remplacer <space><space> par CtrlP
