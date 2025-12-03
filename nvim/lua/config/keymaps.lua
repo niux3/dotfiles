@@ -6,6 +6,5 @@ vim.keymap.set('n', 'nc', '<cmd>tabclose<cr>', {
   desc = 'Close Tab',
   remap = false,  -- Éviter la récursion
 })
-vim.keymap.set('n', '<f2>', '<cmd>Neotree<cr>', { desc = 'Open Neotree' })
-vim.keymap.set('n', '<f3>', '<cmd>Neotree close<cr>', { desc = 'Close Neotree' })
+vim.keymap.set('n', '<f2>', '<cmd>Neotree reveal toggle<cr>', { desc = 'Open/Close Neotree' })
 vim.keymap.set('n', '<leader>gg', '<cmd>!lazygit<cr>', { desc = 'Gitui' })
