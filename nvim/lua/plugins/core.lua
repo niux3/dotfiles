@@ -31,7 +31,13 @@ return {
       }
     }
   },
--- ~/.config/nvim/lua/plugins/ctrlp.lua
+  {
+    "olrtg/nvim-emmet",
+    config = function()
+      vim.keymap.set({ "n", "v" }, '<C-e>', require('nvim-emmet').wrap_with_abbreviation)
+    end,
+  },
+  -- CtrlP
   {
     "kien/ctrlp.vim",
     config = function()
@@ -95,4 +101,59 @@ return {
       }
     }
   },
+  {
+    'NvChad/nvim-colorizer.lua',
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require('colorizer').setup({
+        filetypes = {
+          'css',
+          'javascript',
+          'html',
+          'lua',
+          'vim',
+          'typescript',
+          'javascriptreact',
+          'typescriptreact',
+          'svelte',
+          'vue',
+          'astro',
+          'xml',
+          'markdown',
+          'php',
+          'python',
+          'scss',
+          'less',
+          'json',
+          'yaml',
+        },
+        user_default_options = {
+          RGB = true,
+          RRGGBB = true,
+          names = false,           -- Ne pas afficher les noms (red, blue)
+          RRGGBBAA = true,
+          AARRGGBB = true,
+          rgb_fn = true,
+          hsl_fn = true,
+          css = true,
+          css_fn = true,
+          mode = 'background',     -- Fond coloré
+          virtualtext = '',      -- Icône carrée
+          -- virtualtext = '■',    -- Alternative
+          always_update = true,    -- Mise à jour en temps réel
+        },
+        -- Tous les formats supportés :
+        buftypes = {
+          '*',
+          '!prompt',
+          '!popup',
+        },
+      })
+
+      -- Activer immédiatement pour tous les buffers ouverts
+      vim.defer_fn(function()
+        require('colorizer').attach_to_buffer(0)
+      end, 0)
+    end,
+  }
 }
