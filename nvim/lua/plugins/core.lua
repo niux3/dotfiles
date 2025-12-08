@@ -8,10 +8,10 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       diagnostics = {
-        virtual_text = false,      -- Désactive le texte inline
+        virtual_text = false,      -- le texte inline
         signs = true,              -- Garde les signes marge
         underline = true,          -- Garde soulignement
-        update_in_insert = false,  -- Pas d'update en insertion
+        update_in_insert = true,  -- update en insertion
       }
     }
   },
