@@ -2,7 +2,10 @@
 
 ## vim-config
 
-Pour installer : 
+### Pour installer vim avec plugin : 
+
+- copier/coller old.vimrc dans le home
+- renommer old.vimrc en .vimrc
 - taper cette commande dans le terminal : 
 ```
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -25,6 +28,11 @@ $ python3 install.py --clang-completer
 ```
 - sortir de vim
 - relancer vim
+
+### Pour installer la config sans plugin : 
+
+copier/coller .vimrc dans le home
+
 
 ## tmux
 
