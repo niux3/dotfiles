@@ -33,7 +33,6 @@ $ python3 install.py --clang-completer
 
 copier/coller .vimrc dans le home
 
-
 ## tmux
 
 Pour mettre à jour la configuration de tmux

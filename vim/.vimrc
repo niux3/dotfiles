@@ -1,4 +1,5 @@
 " --- Options Générales ---
+
 set number
 set rnu
 set backspace=indent,eol,start
@@ -11,8 +12,8 @@ set expandtab
 set noswapfile
 set shiftwidth=4
 set softtabstop=4
-set scrolloff=10
-set sidescrolloff=10
+set scrolloff=5
+set sidescrolloff=5
 set cursorline
 set splitbelow
 set splitright
@@ -27,6 +28,7 @@ set clipboard=unnamedplus
 set noshowmode
 
 " --- Rendu graphique ---
+
 set termguicolors
 set background=dark
 syntax on
@@ -74,10 +76,12 @@ call s:hi("MatchParen", s:bg_highlight, s:orange, "NONE")
 call s:hi("Search", s:bg_dark, s:white, "NONE")
 
 " --- Caractères de remplissage ---
+
 let &fillchars = "vert:│,stl: ,stlnc: "
 
 
 " --- Performance et Affichage ---
+
 set nobackup
 set nowritebackup
 set updatetime=300
@@ -111,7 +115,7 @@ augroup StatusLineControl
   autocmd WinLeave * setlocal statusline=%!g:inactive_stline
 augroup END
 
-" --- change apparence cursoeur avec gnome---
+" --- change apparence curseur avec gnome ---
 
 if has("autocmd")
   au VimEnter,InsertLeave * silent execute '!echo -ne "\e[1 q"' | redraw!
@@ -125,5 +129,22 @@ if has("autocmd")
 endif
 
 " --- Raccourcis Tabulations ---
+
 nnoremap nt :tabnew<CR>
 nnoremap nq :tabclose<CR>
+
+" --- Netrw Configuration ---
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
+let g:netrw_altv = 1  " Force Netrw à gauche
+
+" Raccourcis Netrw
+nnoremap <leader>ve :leftabove Vexplore<CR>
+nnoremap <leader>se :aboveright Sexplore<CR>
+nnoremap <leader>te :Texplore<CR>
+nnoremap <leader>e :Explore<CR>
+
+" Toggle Netrw à gauche
+nnoremap <F2> :Lexplore<CR>
