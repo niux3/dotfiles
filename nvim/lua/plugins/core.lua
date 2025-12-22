@@ -4,17 +4,94 @@ return {
 
   -- Désactiver les icônes si tu veux
   { "nvim-tree/nvim-web-devicons", enabled = true },
+
   {
     "neovim/nvim-lspconfig",
+    opts = function(_, opts)
+      -- Garde ta config diagnostics
+      opts.diagnostics = {
+        virtual_text = false,
+        signs = true,
+        underline = true,
+        update_in_insert = true,
+      }
+
+      -- AJOUTE les auto-imports
+      opts.servers = opts.servers or {}
+
+      -- TypeScript/JavaScript
+      opts.servers.ts_ls = {
+        settings = {
+          typescript = {
+            inlayHints = { enabled = false },
+            preferences = {
+              importModuleSpecifierPreference = "relative",
+            },
+          },
+          javascript = {
+            inlayHints = { enabled = false },
+            preferences = {
+              importModuleSpecifierPreference = "relative",
+            },
+          },
+        },
+      }
+
+      -- Python avec Pyright (sera installé automatiquement)
+      opts.servers.pyright = {
+        enabled = false,
+        settings = {
+          python = {
+            analysis = {
+              autoImportCompletions = true,
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "workspace",
+              typeCheckingMode = "basic", -- ou "off" / "strict"
+            },
+          },
+        },
+      }
+      opts.servers.pylsp = {
+        enabled = true,
+        settings = {
+          pylsp = {
+            plugins = {
+              rope_autoimport = {
+                enabled = true,
+              },
+            },
+          },
+        },
+      }
+
+      return opts
+    end,
+  },
+
+  {
+    "saghen/blink.cmp",
     opts = {
-      diagnostics = {
-        virtual_text = false, -- le texte inline
-        signs = true, -- Garde les signes marge
-        underline = true, -- Garde soulignement
-        update_in_insert = true, -- update en insertion
+      keymap = {
+        preset = "default",
+        ["<Tab>"] = { "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+        ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+      },
+      completion = {
+        menu = {
+          auto_show = true,
+        },
+        accept = {
+          auto_brackets = {
+            enabled = true,
+          },
+        },
       },
     },
   },
+
   -- surround
   {
     "nvim-mini/mini.surround",
