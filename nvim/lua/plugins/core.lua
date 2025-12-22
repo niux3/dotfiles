@@ -91,7 +91,50 @@ return {
       },
     },
   },
-
+  -- PYMPLE pour les imports Python (comme PyCharm)
+  {
+    "alexpasmantier/pymple.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    build = ":PympleBuild",
+    config = function()
+      require("pymple").setup({
+        add_import_to_buf = true,
+        logging = {
+          enabled = false,
+        },
+      })
+    end,
+    keys = {
+      {
+        "<leader>ci",
+        function()
+          require("pymple").add_import()
+        end,
+        desc = "Add Python import",
+        ft = "python",
+      },
+      {
+        "<leader>cI",
+        function()
+          require("pymple").organize_imports()
+        end,
+        desc = "Organize Python imports",
+        ft = "python",
+      },
+      {
+        "<leader>cu",
+        function()
+          require("pymple").remove_unused_imports()
+        end,
+        desc = "Remove unused imports",
+        ft = "python",
+      },
+    },
+  },
   -- surround
   {
     "nvim-mini/mini.surround",
