@@ -64,6 +64,12 @@ return {
           },
         },
       }
+      opts.servers.emmet_language_server = {
+        enabled = true,
+      }
+      opts.servers.emmet_ls = {
+        enabled = false,
+      }
 
       return opts
     end,
@@ -89,8 +95,58 @@ return {
           },
         },
       },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer" },
+        providers = {
+          lsp = {
+            name = "LSP",
+            transform_items = function(_, items)
+              return vim.tbl_filter(function(item)
+                -- Filtrer toutes les suggestions d'Emmet
+                local source = (item.source_name or ""):lower()
+                return not source:match("emmet")
+              end, items)
+            end,
+          },
+        },
+      },
     },
   },
+  -- {
+  --   "mattn/emmet-vim",
+  --   ft = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "xml" },
+  --   init = function()
+  --     -- Configuration AVANT le chargement du plugin
+  --     vim.g.user_emmet_mode = "inv" -- insert, normal, visual
+  --     vim.g.user_emmet_leader_key = "<C-e>" -- Ctrl+E, pour expand
+  --     vim.g.user_emmet_install_global = 0 -- Pas d'installation globale
+  --
+  --     -- Settings pour JSX/TSX
+  --     vim.g.user_emmet_settings = {
+  --       javascript = {
+  --         extends = "jsx",
+  --       },
+  --       typescript = {
+  --         extends = "tsx",
+  --       },
+  --       javascriptreact = {
+  --         extends = "jsx",
+  --       },
+  --       typescriptreact = {
+  --         extends = "tsx",
+  --       },
+  --     }
+  --   end,
+  --   config = function()
+  --     -- Active Emmet seulement pour les filetypes spécifiques
+  --     vim.api.nvim_create_autocmd("FileType", {
+  --       pattern = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+  --       callback = function()
+  --         vim.cmd("EmmetInstall")
+  --       end,
+  --     })
+  --   end,
+  -- },
   -- PYMPLE pour les imports Python (comme PyCharm)
   {
     "alexpasmantier/pymple.nvim",
@@ -226,22 +282,6 @@ return {
   },
   { "nvim-neo-tree/neo-tree.nvim", enabled = true },
   {
-    "folke/snacks.nvim",
-    opts = {
-      -- Désactiver les barres verticales d'indentation
-      indent = {
-        enabled = false, -- Désactiver complètement
-        -- Ou personnaliser :
-        -- char = "│",     -- Changer le caractère
-        -- highlight = "Comment",  -- Changer la couleur
-      },
-      -- Désactiver aussi les autres fonctionnalités si besoin
-      scope = {
-        enabled = false, -- Barres de scope
-      },
-    },
-  },
-  {
     "NvChad/nvim-colorizer.lua",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
@@ -294,6 +334,30 @@ return {
       vim.defer_fn(function()
         require("colorizer").attach_to_buffer(0)
       end, 0)
+    end,
+  },
+  {
+    "folke/snacks.nvim",
+    opts = function(_, opts)
+      -- Désactiver indent et scope
+      opts.indent = { enabled = false }
+      opts.scope = { enabled = false }
+
+      -- Dashboard
+      opts.dashboard = {
+        preset = {
+          header = [[
+ ███╗   ██╗██╗   ██╗██╗███╗   ███╗
+ ████╗  ██║██║   ██║██║████╗ ████║
+ ██╔██╗ ██║██║   ██║██║██╔████╔██║
+ ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
+ ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
+ ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
+        ]],
+        },
+      }
+
+      return opts
     end,
   },
 }
