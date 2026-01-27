@@ -8,13 +8,23 @@ vim.keymap.set("n", "nq", "<cmd>tabclose<cr>", {
   desc = "Close Tab",
   remap = false, -- Éviter la récursion
 })
+
+--tags
+vim.keymap.set("n", "<f4>", "<cmd>TagbarToggle<cr>", { desc = "Tagbar" })
+
 -- neo-tree
 vim.keymap.set("n", "<f2>", "<cmd>Neotree reveal toggle<cr>", { desc = "Open/Close Neotree" })
 vim.keymap.set("n", "<leader>gg", "<cmd>!lazygit<cr>", { desc = "Gitui" })
 
+-- resize window
+vim.keymap.set("n", "<C-w><up>", "<C-w>-")
+vim.keymap.set("n", "<C-w><right>", "<C-w><")
+vim.keymap.set("n", "<C-w><down>", "<C-w>+")
+vim.keymap.set("n", "<C-w><left>", "<C-w>>")
+
 -- Quickfix navigation
-vim.keymap.set("n", "]q", "<cmd>cnext<cr>", { desc = "Next quickfix" })
-vim.keymap.set("n", "[q", "<cmd>cprev<cr>", { desc = "Previous quickfix" })
+vim.keymap.set("n", "<q", "<cmd>cnext<cr>", { desc = "Next quickfix" })
+vim.keymap.set("n", ">q", "<cmd>cprev<cr>", { desc = "Previous quickfix" })
 vim.keymap.set("n", "<leader>qo", "<cmd>copen<cr>", { desc = "Open quickfix" })
 vim.keymap.set("n", "<leader>qc", "<cmd>cclose<cr>", { desc = "Close quickfix" })
 
