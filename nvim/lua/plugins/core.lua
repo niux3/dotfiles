@@ -39,10 +39,13 @@ return {
 
       -- Python avec Pyright (sera installé automatiquement)
       opts.servers.pyright = {
-        enabled = false,
+        enabled = true,
         settings = {
           python = {
             analysis = {
+              indexing = true,
+              importFormat = "absolute",
+              exclude = { "**/node_modules", "**/__pycache__" },
               autoImportCompletions = true,
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
@@ -147,55 +150,56 @@ return {
   --     })
   --   end,
   -- },
+
   -- PYMPLE pour les imports Python (comme PyCharm)
-  {
-    "alexpasmantier/pymple.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    build = ":PympleBuild",
-    config = function()
-      require("pymple").setup({
-        add_import_to_buf = true,
-        logging = {
-          enabled = false,
-        },
-      })
-    end,
-    keys = {
-      {
-        "<leader>ci",
-        function()
-          require("pymple").add_import()
-        end,
-        desc = "Add Python import",
-        ft = "python",
-      },
-      {
-        "<leader>cI",
-        function()
-          require("pymple").organize_imports()
-        end,
-        desc = "Organize Python imports",
-        ft = "python",
-      },
-      {
-        "<leader>cu",
-        function()
-          require("pymple").remove_unused_imports()
-        end,
-        desc = "Remove unused imports",
-        ft = "python",
-      },
-    },
-  },
+  -- {
+  --   "alexpasmantier/pymple.nvim",
+  --   dependencies = {
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-tree/nvim-web-devicons",
+  --   },
+  --   build = ":PympleBuild",
+  --   config = function()
+  --     require("pymple").setup({
+  --       add_import_to_buf = true,
+  --       logging = {
+  --         enabled = false,
+  --       },
+  --     })
+  --   end,
+  --   keys = {
+  --     {
+  --       "<leader>ci",
+  --       function()
+  --         require("pymple").add_import()
+  --       end,
+  --       desc = "Add Python import",
+  --       ft = "python",
+  --     },
+  --     {
+  --       "<leader>cI",
+  --       function()
+  --         require("pymple").organize_imports()
+  --       end,
+  --       desc = "Organize Python imports",
+  --       ft = "python",
+  --     },
+  --     {
+  --       "<leader>cu",
+  --       function()
+  --         require("pymple").remove_unused_imports()
+  --       end,
+  --       desc = "Remove unused imports",
+  --       ft = "python",
+  --     },
+  --   },
+  -- },
   {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        python = { "autopep8" },
+        python = { "isort", "autopep8" },
         javascript = { "prettier" },
         typescript = { "prettier" },
         javascriptreact = { "prettier" },
@@ -213,13 +217,22 @@ return {
       },
     },
   },
+  {
+    "evanleck/vim-svelte",
+    branch = "main",
+    init = function()
+      -- On définit les variables AVANT le chargement du plugin
+      vim.g.svelte_indent_script = 0
+      vim.g.svelte_indent_style = 0
+    end,
+  },
   -- surround
   {
-    "nvim-mini/mini.surround",
+    "echasnovski/mini.surround",
     opts = {
       -- Config options si besoin
       mappings = {
-        add = "ys", -- Add surrounding
+        add = "os", -- Add surrounding
         delete = "ds", -- Delete surrounding
         find = "", -- Find surrounding
         find_left = "",
@@ -337,6 +350,18 @@ return {
     end,
   },
   {
+    "preservim/tagbar",
+    enabled = true,
+  },
+  {
+    "nvim-mini/mini.animate",
+    enabled = false,
+  },
+  {
+    "folke/flash.nvim",
+    enabled = false,
+  },
+  {
     "folke/snacks.nvim",
     opts = function(_, opts)
       -- Désactiver indent et scope
@@ -347,12 +372,12 @@ return {
       opts.dashboard = {
         preset = {
           header = [[
- ███╗   ██╗██╗   ██╗██╗███╗   ███╗
- ████╗  ██║██║   ██║██║████╗ ████║
- ██╔██╗ ██║██║   ██║██║██╔████╔██║
- ██║╚██╗██║╚██╗ ██╔╝██║██║╚██╔╝██║
- ██║ ╚████║ ╚████╔╝ ██║██║ ╚═╝ ██║
- ╚═╝  ╚═══╝  ╚═══╝  ╚═╝╚═╝     ╚═╝
+ _______  _______________________   ____.___   _____   
+ \      \ \_   _____/\_____  \   \ /   /|   | /     \  
+ /   |   \ |    __)_  /   |   \   Y   / |   |/  \ /  \ 
+/    |    \|        \/    |    \     /  |   /    Y    \
+\____|__  /_______  /\_______  /\___/   |___\____|__  /
+        \/        \/         \/                     \/ 
         ]],
         },
       }
