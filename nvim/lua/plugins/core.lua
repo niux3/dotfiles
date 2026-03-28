@@ -49,7 +49,7 @@ return {
               autoImportCompletions = true,
               autoSearchPaths = true,
               useLibraryCodeForTypes = true,
-              diagnosticMode = "workspace",
+              -- diagnosticMode = "workspace",
               typeCheckingMode = "basic", -- ou "off" / "strict"
             },
           },
@@ -214,6 +214,11 @@ return {
       format_on_save = {
         timeout_ms = 500,
         lsp_fallback = true,
+      },
+      formatters = {
+        prettier = {
+          prepend_args = { "--tab-width", "4" },
+        },
       },
     },
   },
