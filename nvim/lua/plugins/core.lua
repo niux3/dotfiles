@@ -68,11 +68,22 @@ return {
         },
       }
       opts.servers.emmet_language_server = {
-        enabled = true,
+        enabled = false,
       }
       opts.servers.emmet_ls = {
         enabled = false,
       }
+      opts.servers.html = {
+        enabled = false,
+      }
+    -- Désactive le LSP CSS
+    opts.servers.cssls = {
+        enabled = false,
+    }
+    -- Alternative : certains utilisent 'css_ls' comme nom
+    opts.servers.css_ls = {
+        enabled = false,
+    }
 
       return opts
     end,
@@ -81,75 +92,93 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
-      keymap = {
-        preset = "default",
-        ["<Tab>"] = { "select_next", "fallback" },
-        ["<S-Tab>"] = { "select_prev", "fallback" },
-        ["<CR>"] = { "accept", "fallback" },
-        ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-      },
-      completion = {
-        menu = {
-          auto_show = true,
+        keymap = {
+            preset = "default",
+            ["<Tab>"] = { "select_next", "fallback" },
+            ["<S-Tab>"] = { "select_prev", "fallback" },
+            ["<CR>"] = { "accept", "fallback" },
+            ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+            -- AJOUTE CECI : <C-e> cache blink ET laisse passer la touche
+            ["<C-e>"] = { "hide", "fallback" },
         },
-        accept = {
-          auto_brackets = {
-            enabled = true,
-          },
+        completion = {
+            menu = {
+                auto_show = function()
+                    -- Désactive blink UNIQUEMENT pour html et css
+                    local disabled = { "html", "css", "scss" }
+                    local ft = vim.bo.filetype
+                    local should_disable = vim.tbl_contains(disabled, ft)
+                    -- vim.notify("Filetype: " .. ft .. " | Disabled: " .. tostring(should_disable), vim.log.levels.INFO, { title = "Blink Debug" })
+                    return not should_disable
+                end,
+            },
+            -- AJOUTE CECI : empêche l'insertion automatique intrusive
+            list = {
+                selection = {
+                    -- Ne présélectionne rien automatiquement
+                    preselect = false,
+                    -- N'insère jamais automatiquement sans validation
+                    auto_insert = false,
+                },
+            },
+            accept = {
+                auto_brackets = {
+                    enabled = true,
+                },
+            },
         },
-      },
-      sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
-        providers = {
-          lsp = {
-            name = "LSP",
-            transform_items = function(_, items)
-              return vim.tbl_filter(function(item)
-                -- Filtrer toutes les suggestions d'Emmet
-                local source = (item.source_name or ""):lower()
-                return not source:match("emmet")
-              end, items)
-            end,
-          },
+        sources = {
+            default = { "lsp", "path", "snippets", "buffer" },
+            providers = {
+                lsp = {
+                    name = "LSP",
+                    transform_items = function(_, items)
+                        return vim.tbl_filter(function(item)
+                            local source = (item.source_name or ""):lower()
+                            -- Filtre SEULEMENT emmet, pas html
+                            return not source:match("emmet")
+                        end, items)
+                    end,
+                },
+            },
         },
-      },
     },
+},
+  {
+    "mattn/emmet-vim",
+    ft = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "xml" },
+    init = function()
+      -- Configuration AVANT le chargement du plugin
+      vim.g.user_emmet_mode = "inv" -- insert, normal, visual
+      vim.g.user_emmet_leader_key = "<C-e>" -- Ctrl+e, pour expand
+      vim.g.user_emmet_install_global = 0 -- Pas d'installation globale
+  
+      -- Settings pour JSX/TSX
+      vim.g.user_emmet_settings = {
+        javascript = {
+          extends = "jsx",
+        },
+        typescript = {
+          extends = "tsx",
+        },
+        javascriptreact = {
+          extends = "jsx",
+        },
+        typescriptreact = {
+          extends = "tsx",
+        },
+      }
+    end,
+    config = function()
+      -- Active Emmet seulement pour les filetypes spécifiques
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+        callback = function()
+          vim.cmd("EmmetInstall")
+        end,
+      })
+    end,
   },
-  -- {
-  --   "mattn/emmet-vim",
-  --   ft = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "xml" },
-  --   init = function()
-  --     -- Configuration AVANT le chargement du plugin
-  --     vim.g.user_emmet_mode = "inv" -- insert, normal, visual
-  --     vim.g.user_emmet_leader_key = "<C-e>" -- Ctrl+E, pour expand
-  --     vim.g.user_emmet_install_global = 0 -- Pas d'installation globale
-  --
-  --     -- Settings pour JSX/TSX
-  --     vim.g.user_emmet_settings = {
-  --       javascript = {
-  --         extends = "jsx",
-  --       },
-  --       typescript = {
-  --         extends = "tsx",
-  --       },
-  --       javascriptreact = {
-  --         extends = "jsx",
-  --       },
-  --       typescriptreact = {
-  --         extends = "tsx",
-  --       },
-  --     }
-  --   end,
-  --   config = function()
-  --     -- Active Emmet seulement pour les filetypes spécifiques
-  --     vim.api.nvim_create_autocmd("FileType", {
-  --       pattern = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
-  --       callback = function()
-  --         vim.cmd("EmmetInstall")
-  --       end,
-  --     })
-  --   end,
-  -- },
 
   -- PYMPLE pour les imports Python (comme PyCharm)
   -- {
@@ -247,12 +276,12 @@ return {
       },
     },
   },
-  {
-    "olrtg/nvim-emmet",
-    config = function()
-      vim.keymap.set({ "n", "v" }, "<C-e>", require("nvim-emmet").wrap_with_abbreviation)
-    end,
-  },
+  -- {
+  --   "olrtg/nvim-emmet",
+  --   config = function()
+  --     vim.keymap.set({ "n", "v" }, "<C-e>", require("nvim-emmet").wrap_with_abbreviation)
+  --   end,
+  -- },
   -- CtrlP
   {
     "kien/ctrlp.vim",

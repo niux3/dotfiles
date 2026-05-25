@@ -3,15 +3,15 @@
 -- Add any additional keymaps here
 
 -- tabs
-vim.keymap.set('n', 'nt', '<cmd>tabnew<cr>', { desc = 'New Tab' })
-vim.keymap.set('n', 'nq', '<cmd>tabclose<cr>', { 
-  desc = 'Close Tab',
-  remap = false,  -- Éviter la récursion
+vim.keymap.set("n", "nt", "<cmd>tabnew<cr>", { desc = "New Tab" })
+vim.keymap.set("n", "nq", "<cmd>tabclose<cr>", {
+  desc = "Close Tab",
+  remap = false, -- Éviter la récursion
 })
 
 -- neo-tree
-vim.keymap.set('n', '<f2>', '<cmd>Neotree reveal toggle<cr>', { desc = 'Open/Close Neotree' })
-vim.keymap.set('n', '<leader>gg', '<cmd>!lazygit<cr>', { desc = 'Gitui' })
+vim.keymap.set("n", "<f2>", "<cmd>Neotree reveal toggle<cr>", { desc = "Open/Close Neotree" })
+vim.keymap.set("n", "<leader>gg", "<cmd>!lazygit<cr>", { desc = "Gitui" })
 
 -- hightlight linter
 vim.keymap.set("n", "<f3>", function()
@@ -19,3 +19,14 @@ vim.keymap.set("n", "<f3>", function()
   vim.diagnostic.config({ virtual_text = not current })
   vim.notify("Virtual text: " .. (not current and "ON" or "OFF"))
 end, { desc = "Toggle Virtual Text" })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+  callback = function()
+    vim.keymap.set("i", "<C-e>", "<plug>(emmet-expand-abbr)", {
+      buffer = true,
+      remap = true,
+      desc = "Emmet Expand",
+    })
+  end,
+})
