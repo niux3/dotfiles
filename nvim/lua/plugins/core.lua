@@ -263,6 +263,7 @@ return {
   -- surround
   {
     "echasnovski/mini.surround",
+    enabled = false,
     opts = {
       -- Config options si besoin
       mappings = {
@@ -276,12 +277,20 @@ return {
       },
     },
   },
-  -- {
-  --   "olrtg/nvim-emmet",
-  --   config = function()
-  --     vim.keymap.set({ "n", "v" }, "<C-e>", require("nvim-emmet").wrap_with_abbreviation)
-  --   end,
-  -- },
+{
+  "tpope/vim-surround",
+  init = function()
+    -- Remplace les mappings par défaut
+    vim.g.surround_no_mappings = 1  -- désactive tous les mappings par défaut
+  end,
+  config = function()
+    vim.keymap.set("n", "os", "<Plug>Ysurround", { desc = "Add surrounding" })
+    vim.keymap.set("n", "oss", "<Plug>Yssurround", { desc = "Add surrounding line" })
+    vim.keymap.set("n", "ds", "<Plug>Dsurround", { desc = "Delete surrounding" })
+    vim.keymap.set("n", "cs", "<Plug>Csurround", { desc = "Change surrounding" })
+    vim.keymap.set("x", "os", "<Plug>VSurround", { desc = "Add surrounding (visual)" })
+  end,
+},
   -- CtrlP
   {
     "kien/ctrlp.vim",
