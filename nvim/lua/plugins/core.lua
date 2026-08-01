@@ -470,8 +470,13 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
+      "franco-ruggeri/codecompanion-spinner.nvim",
+      "echasnovski/mini.pick",
     },
     opts = {
+      extensions = {
+        spinner = {},
+      },
       adapters = {
         http = {
           nvidia_nim = function()
@@ -510,6 +515,11 @@ return {
         inline = { adapter = "nvidia_nim" },
       },
     },
+  },
+  {
+    "echasnovski/mini.pick",
+    version = false,
+    opts = {}, -- déclenche require('mini.pick').setup({}) automatiquement via LazyVim
   },
   -- {
   --   "yetone/avante.nvim",
