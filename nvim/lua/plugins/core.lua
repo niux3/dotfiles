@@ -76,14 +76,14 @@ return {
       opts.servers.html = {
         enabled = false,
       }
-    -- Désactive le LSP CSS
-    opts.servers.cssls = {
+      -- Désactive le LSP CSS
+      opts.servers.cssls = {
         enabled = false,
-    }
-    -- Alternative : certains utilisent 'css_ls' comme nom
-    opts.servers.css_ls = {
+      }
+      -- Alternative : certains utilisent 'css_ls' comme nom
+      opts.servers.css_ls = {
         enabled = false,
-    }
+      }
 
       return opts
     end,
@@ -92,67 +92,84 @@ return {
   {
     "saghen/blink.cmp",
     opts = {
-        keymap = {
-            preset = "default",
-            ["<Tab>"] = { "select_next", "fallback" },
-            ["<S-Tab>"] = { "select_prev", "fallback" },
-            ["<CR>"] = { "accept", "fallback" },
-            ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
-            -- AJOUTE CECI : <C-e> cache blink ET laisse passer la touche
-            ["<C-e>"] = { "hide", "fallback" },
+      keymap = {
+        preset = "default",
+        ["<Tab>"] = { "select_next", "fallback" },
+        ["<S-Tab>"] = { "select_prev", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+        ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+        -- AJOUTE CECI : <C-e> cache blink ET laisse passer la touche
+        ["<C-e>"] = { "hide", "fallback" },
+      },
+      completion = {
+        menu = {
+          auto_show = function()
+            -- Désactive blink UNIQUEMENT pour html et css
+            local disabled = { "html", "css", "scss" }
+            local ft = vim.bo.filetype
+            local should_disable = vim.tbl_contains(disabled, ft)
+            -- vim.notify("Filetype: " .. ft .. " | Disabled: " .. tostring(should_disable), vim.log.levels.INFO, { title = "Blink Debug" })
+            return not should_disable
+          end,
         },
-        completion = {
-            menu = {
-                auto_show = function()
-                    -- Désactive blink UNIQUEMENT pour html et css
-                    local disabled = { "html", "css", "scss" }
-                    local ft = vim.bo.filetype
-                    local should_disable = vim.tbl_contains(disabled, ft)
-                    -- vim.notify("Filetype: " .. ft .. " | Disabled: " .. tostring(should_disable), vim.log.levels.INFO, { title = "Blink Debug" })
-                    return not should_disable
-                end,
-            },
-            -- AJOUTE CECI : empêche l'insertion automatique intrusive
-            list = {
-                selection = {
-                    -- Ne présélectionne rien automatiquement
-                    preselect = false,
-                    -- N'insère jamais automatiquement sans validation
-                    auto_insert = false,
-                },
-            },
-            accept = {
-                auto_brackets = {
-                    enabled = true,
-                },
-            },
+        -- AJOUTE CECI : empêche l'insertion automatique intrusive
+        list = {
+          selection = {
+            -- Ne présélectionne rien automatiquement
+            preselect = false,
+            -- N'insère jamais automatiquement sans validation
+            auto_insert = false,
+          },
         },
-        sources = {
-            default = { "lsp", "path", "snippets", "buffer" },
-            providers = {
-                lsp = {
-                    name = "LSP",
-                    transform_items = function(_, items)
-                        return vim.tbl_filter(function(item)
-                            local source = (item.source_name or ""):lower()
-                            -- Filtre SEULEMENT emmet, pas html
-                            return not source:match("emmet")
-                        end, items)
-                    end,
-                },
-            },
+        accept = {
+          auto_brackets = {
+            enabled = true,
+          },
         },
+      },
+      sources = {
+        default = { "lsp", "path", "snippets", "buffer", "codecompanion" },
+        providers = {
+          lsp = {
+            name = "LSP",
+            transform_items = function(_, items)
+              return vim.tbl_filter(function(item)
+                local source = (item.source_name or ""):lower()
+                -- Filtre SEULEMENT emmet, pas html
+                return not source:match("emmet")
+              end, items)
+            end,
+          },
+          codecompanion = {
+            name = "CodeCompanion",
+            module = "codecompanion.providers.completion.blink",
+            enabled = true,
+          },
+        },
+      },
     },
-},
+  },
   {
     "mattn/emmet-vim",
-    ft = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "xml" },
+    ft = {
+      "html",
+      "css",
+      "scss",
+      "jinja",
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "vue",
+      "svelte",
+      "xml",
+    },
     init = function()
       -- Configuration AVANT le chargement du plugin
       vim.g.user_emmet_mode = "inv" -- insert, normal, visual
       vim.g.user_emmet_leader_key = "<C-e>" -- Ctrl+e, pour expand
       vim.g.user_emmet_install_global = 0 -- Pas d'installation globale
-  
+
       -- Settings pour JSX/TSX
       vim.g.user_emmet_settings = {
         javascript = {
@@ -172,7 +189,18 @@ return {
     config = function()
       -- Active Emmet seulement pour les filetypes spécifiques
       vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+        pattern = {
+          "html",
+          "css",
+          "scss",
+          "jinja",
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+          "vue",
+          "svelte",
+        },
         callback = function()
           vim.cmd("EmmetInstall")
         end,
@@ -277,20 +305,20 @@ return {
       },
     },
   },
-{
-  "tpope/vim-surround",
-  init = function()
-    -- Remplace les mappings par défaut
-    vim.g.surround_no_mappings = 1  -- désactive tous les mappings par défaut
-  end,
-  config = function()
-    vim.keymap.set("n", "os", "<Plug>Ysurround", { desc = "Add surrounding" })
-    vim.keymap.set("n", "oss", "<Plug>Yssurround", { desc = "Add surrounding line" })
-    vim.keymap.set("n", "ds", "<Plug>Dsurround", { desc = "Delete surrounding" })
-    vim.keymap.set("n", "cs", "<Plug>Csurround", { desc = "Change surrounding" })
-    vim.keymap.set("x", "os", "<Plug>VSurround", { desc = "Add surrounding (visual)" })
-  end,
-},
+  {
+    "tpope/vim-surround",
+    init = function()
+      -- Remplace les mappings par défaut
+      vim.g.surround_no_mappings = 1 -- désactive tous les mappings par défaut
+    end,
+    config = function()
+      vim.keymap.set("n", "os", "<Plug>Ysurround", { desc = "Add surrounding" })
+      vim.keymap.set("n", "oss", "<Plug>Yssurround", { desc = "Add surrounding line" })
+      vim.keymap.set("n", "ds", "<Plug>Dsurround", { desc = "Delete surrounding" })
+      vim.keymap.set("n", "cs", "<Plug>Csurround", { desc = "Change surrounding" })
+      vim.keymap.set("x", "os", "<Plug>VSurround", { desc = "Add surrounding (visual)" })
+    end,
+  },
   -- CtrlP
   {
     "kien/ctrlp.vim",
@@ -404,6 +432,147 @@ return {
     "folke/flash.nvim",
     enabled = false,
   },
+  {
+    "supermaven-inc/supermaven-nvim",
+    event = "VeryLazy",
+    config = function()
+      require("supermaven-nvim").setup({
+        keymaps = {
+          accept_suggestion = "<C-a>",
+          clear_suggestion = "<C-]>",
+          accept_word = "<C-j>",
+        },
+        ignore_filetypes = { cpp = true },
+        color = {
+          suggestion_color = "#ffffff",
+          cterm = 244,
+        },
+        log_level = "off", -- set to "off" to disable logging completely
+        disable_inline_completion = false, -- disables inline completion for use with cmp
+        disable_keymaps = false, -- disables built in keymaps for more manual control
+        condition = function()
+          return vim.env.NVIM_SUPERMAVEN_DISABLE
+        end,
+      })
+      vim.cmd("SupermavenUseFree!") -- Utilise le mode "Free" par défaut. Le ! permet de ne pas afficher le message de confirmation. Mais affichera une erreur au démarrage.
+    end,
+  },
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = { "supermaven-inc/supermaven-nvim" },
+    keys = {
+      { "<tab>", false, mode = { "i", "s" } },
+      { "<s-tab>", false, mode = { "i", "s" } },
+    },
+  },
+  {
+    "olimorris/codecompanion.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    opts = {
+      adapters = {
+        http = {
+          nvidia_nim = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              env = {
+                url = "https://integrate.api.nvidia.com",
+                api_key = "NVIDIA_API_KEY",
+              },
+              schema = {
+                model = {
+                  default = "nvidia/nemotron-3-super-120b-a12b",
+                },
+                max_tokens = {
+                  default = 2048,
+                },
+              },
+            })
+          end,
+          -- openrouter_gpt = function()
+          --   return require("codecompanion.adapters").extend("openai_compatible", {
+          --     env = {
+          --       url = "https://openrouter.ai/api",
+          --       api_key = "OPENROUTER_API_KEY",
+          --       chat_url = "/v1/chat/completions",
+          --     },
+          --     schema = {
+          --       model = { default = "openai/gpt-4o-mini" },
+          --       max_tokens = { default = 2048 },
+          --     },
+          --   })
+          -- end,
+        },
+      },
+      interactions = {
+        chat = { adapter = "nvidia_nim" },
+        inline = { adapter = "nvidia_nim" },
+      },
+    },
+  },
+  -- {
+  --   "yetone/avante.nvim",
+  --   event = "VeryLazy",
+  --   lazy = false,
+  --   version = "*",
+  --   opts = {
+  --     provider = "openrouter", -- 👈 Change le fournisseur par défaut
+  --     debug = false,
+  --     providers = {
+  --       openrouter = {
+  --         __inherited_from = "openai",
+  --         endpoint = "https://openrouter.ai/api/v1",
+  --         api_key_name = "OPENROUTER_API_KEY",
+  --         model = "openai/gpt-4o-mini", -- ou "gemini-2.5-flash-preview-05-20"
+  --         max_tokens = 4096,
+  --         extra_request_body = {
+  --           top_p = 0.9,
+  --           temperature = 0.7,
+  --         },
+  --       },
+  --     },
+  --   },
+  --   -- opts = {
+  --   --   provider = "nvidia",
+  --   --   providers = {
+  --   --     nvidia = {
+  --   --       __inherited_from = "openai",
+  --   --       endpoint = "https://integrate.api.nvidia.com/v1",
+  --   --       api_key_name = "NVIDIA_API_KEY",
+  --   --       model = "nvidia/nemotron-3-super-120b-a12b",
+  --   --       disable_tools = true,  -- Important : Nemotron ne supporte pas le Tool Use
+  --   --       extra_request_body = {
+  --   --         max_tokens = 4096,
+  --   --       },
+  --   --     },
+  --   --   },
+  --   -- },
+  --   build = "make",
+  --   dependencies = {
+  --     "stevearc/dressing.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-tree/nvim-web-devicons",
+  --     {
+  --       "HakonHarnes/img-clip.nvim",
+  --       event = "VeryLazy",
+  --       opts = {
+  --         default = {
+  --           embed_image_as_base64 = false,
+  --           prompt_for_file_name = false,
+  --           drag_and_drop = { insert_mode = true },
+  --           use_absolute_path = true,
+  --         },
+  --       },
+  --     },
+  --     {
+  --       "MeanderingProgrammer/render-markdown.nvim",
+  --       opts = { file_types = { "markdown", "Avante" } },
+  --       ft = { "markdown", "Avante" },
+  --     },
+  --   },
+  -- },
   {
     "folke/snacks.nvim",
     opts = function(_, opts)

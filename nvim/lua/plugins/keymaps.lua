@@ -21,7 +21,18 @@ vim.keymap.set("n", "<f3>", function()
 end, { desc = "Toggle Virtual Text" })
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte" },
+  pattern = {
+    "html",
+    "css",
+    "scss",
+    "jinja",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "svelte",
+  },
   callback = function()
     vim.keymap.set("i", "<C-e>", "<plug>(emmet-expand-abbr)", {
       buffer = true,
@@ -30,3 +41,6 @@ vim.api.nvim_create_autocmd("FileType", {
     })
   end,
 })
+
+-- CodeCompanion.nvim shortcuts
+vim.keymap.set("n", "<leader>cc", ":CodeCompanionChat<CR>", { desc = "CodeCompanionChat: Éditer avec IA" })
