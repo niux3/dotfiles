@@ -43,4 +43,5 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- CodeCompanion.nvim shortcuts
-vim.keymap.set("n", "<leader>cc", ":CodeCompanionChat<CR>", { desc = "CodeCompanionChat: Éditer avec IA" })
+vim.keymap.set("n", "<f5>", ":CodeCompanionChat Toggle<CR>", { desc = "CodeCompanionChat toggle: Éditer avec IA" })
+vim.keymap.set("n", "<f6>", ":CodeCompanionChat<CR>", { desc = "CodeCompanionChat: New Éditer avec IA" })
