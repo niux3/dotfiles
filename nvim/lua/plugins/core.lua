@@ -472,10 +472,19 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "franco-ruggeri/codecompanion-spinner.nvim",
       "echasnovski/mini.pick",
+      "ravitemer/codecompanion-history.nvim",
     },
     opts = {
       extensions = {
         spinner = {},
+        history = {
+          enabled = true,
+          opts = {
+            picker = "mini_pick", -- tu as déjà mini.pick installé
+            auto_save = true, -- sauvegarde automatique après chaque échange
+            continue_last_chat = false, -- true = rouvre le dernier chat au démarrage de nvim
+          },
+        },
       },
       display = {
         chat = {
@@ -488,53 +497,55 @@ return {
       },
       adapters = {
         http = {
-          -- nvidia_nim = function()
-          --   return require("codecompanion.adapters").extend("openai_compatible", {
-          --     env = {
-          --       url = "https://integrate.api.nvidia.com",
-          --       api_key = "NVIDIA_API_KEY",
-          --     },
-          --     schema = {
-          --       model = {
-          --         default = "nvidia/nemotron-3-super-120b-a12b",
-          --       },
-          --       max_tokens = {
-          --         default = 2048,
-          --       },
-          --     },
-          --   })
-          -- end,
-          openrouter_gpt = function()
+          nvidia_nim = function()
             return require("codecompanion.adapters").extend("openai_compatible", {
               env = {
-                url = "https://openrouter.ai/api",
-                api_key = "OPENROUTER_API_KEY",
-                chat_url = "/v1/chat/completions",
+                url = "https://integrate.api.nvidia.com",
+                api_key = "NVIDIA_API_KEY",
               },
               schema = {
                 model = {
-                  default = "nvidia/nemotron-3-ultra-550b-a55b:free",
-                  choices = {
-                    "openai/gpt-4o-mini",
-                    "anthropic/claude-3.5-sonnet",
-                    "nvidia/nemotron-3-super-120b-a12b:free",
-                    "nvidia/nemotron-3-ultra-550b-a55b:free",
-                  },
+                  -- default = "nvidia/nemotron-3-super-120b-a12b",
+                  -- default = "nvidia/nemotron-3-ultra-550b-a55b",
+                  default = "deepseek-ai/deepseek-v4-pro",
                 },
-                max_tokens = { default = 2048 },
+                max_tokens = {
+                  default = 2048,
+                },
               },
             })
           end,
+          -- openrouter_gpt = function()
+          --   return require("codecompanion.adapters").extend("openai_compatible", {
+          --     env = {
+          --       url = "https://openrouter.ai/api",
+          --       api_key = "OPENROUTER_API_KEY",
+          --       chat_url = "/v1/chat/completions",
+          --     },
+          --     schema = {
+          --       model = {
+          --         default = "nvidia/nemotron-3-ultra-550b-a55b:free",
+          --         choices = {
+          --           "openai/gpt-4o-mini",
+          --           "anthropic/claude-3.5-sonnet",
+          --           "nvidia/nemotron-3-super-120b-a12b:free",
+          --           "nvidia/nemotron-3-ultra-550b-a55b:free",
+          --         },
+          --       },
+          --       max_tokens = { default = 2048 },
+          --     },
+          --   })
+          -- end,
         },
       },
-      -- interactions = {
-      --   chat = { adapter = "nvidia_nim" },
-      --   inline = { adapter = "nvidia_nim" },
-      -- },
       interactions = {
-        chat = { adapter = "openrouter_gpt" },
-        inline = { adapter = "openrouter_gpt" },
+        chat = { adapter = "nvidia_nim" },
+        inline = { adapter = "nvidia_nim" },
       },
+      -- interactions = {
+      --   chat = { adapter = "openrouter_gpt" },
+      --   inline = { adapter = "openrouter_gpt" },
+      -- },
     },
   },
   {
