@@ -32,6 +32,7 @@ vim.api.nvim_create_autocmd("FileType", {
     "typescriptreact",
     "vue",
     "svelte",
+    "php",
   },
   callback = function()
     vim.keymap.set("i", "<C-e>", "<plug>(emmet-expand-abbr)", {

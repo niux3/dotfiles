@@ -163,6 +163,7 @@ return {
       "vue",
       "svelte",
       "xml",
+      "php",
     },
     init = function()
       -- Configuration AVANT le chargement du plugin
@@ -200,6 +201,7 @@ return {
           "typescriptreact",
           "vue",
           "svelte",
+          "php",
         },
         callback = function()
           vim.cmd("EmmetInstall")
@@ -289,22 +291,22 @@ return {
     end,
   },
   -- surround
-  {
-    "echasnovski/mini.surround",
-    enabled = false,
-    opts = {
-      -- Config options si besoin
-      mappings = {
-        add = "os", -- Add surrounding
-        delete = "ds", -- Delete surrounding
-        find = "", -- Find surrounding
-        find_left = "",
-        highlight = "",
-        replace = "cs", -- Change surrounding
-        update_n_lines = "",
-      },
-    },
-  },
+  -- {
+  --   "echasnovski/mini.surround",
+  --   enabled = false,
+  --   opts = {
+  --     -- Config options si besoin
+  --     mappings = {
+  --       add = "os", -- Add surrounding
+  --       delete = "ds", -- Delete surrounding
+  --       find = "", -- Find surrounding
+  --       find_left = "",
+  --       highlight = "",
+  --       replace = "cs", -- Change surrounding
+  --       update_n_lines = "",
+  --     },
+  --   },
+  -- },
   {
     "tpope/vim-surround",
     init = function()
@@ -444,7 +446,7 @@ return {
         },
         ignore_filetypes = { cpp = true },
         color = {
-          suggestion_color = "#ffffff",
+          suggestion_color = "#f00",
           cterm = 244,
         },
         log_level = "off", -- set to "off" to disable logging completely
@@ -506,8 +508,8 @@ return {
               schema = {
                 model = {
                   -- default = "nvidia/nemotron-3-super-120b-a12b",
-                  -- default = "nvidia/nemotron-3-ultra-550b-a55b",
-                  default = "deepseek-ai/deepseek-v4-pro",
+                  default = "nvidia/nemotron-3-ultra-550b-a55b",
+                  -- default = "deepseek-ai/deepseek-v4-pro",
                 },
                 max_tokens = {
                   default = 2048,
